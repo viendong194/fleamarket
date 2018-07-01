@@ -33,11 +33,11 @@ export function addProduct(req, res, next) {
   }
   function saveProduct(obj) {
     new Product(obj).save((err, product) => {
-      if (err) res.send(err);
+      if (err) res.json({err});
       else if (!product) res.status(400);
       else {
         return product.addSeller(req.body.author_id).then((_product) => {
-          return res.send(_product);
+          return res.json({_product});
         });
       }
       next();
@@ -54,10 +54,10 @@ export function getAll(req, res, next) {
   Product.find(req.params.id)
     .populate('seller')
     .populate('comments.author')
-    .exec((err, product) => {
-      if (err) res.send(err);
-      else if (!product) res.status(404);
-      else res.send(product);
+    .exec((err, products) => {
+      if (err) res.json({err});
+      else if (!products) res.status(404);
+      else res.json(products);
       next();
     });
 }
@@ -103,9 +103,9 @@ export function getProduct(req, res, next) {
     .populate('seller')
     .populate('comments.author')
     .exec((err, product) => {
-      if (err) res.send(err);
+      if (err) res.json({err});
       else if (!product) res.status(404);
-      else res.send(product);
+      else res.json({product});
       next();
     });
 }

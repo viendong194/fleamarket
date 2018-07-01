@@ -6,7 +6,7 @@ export function addUser(req, res, next) {
   new User(req.body).save((err, newUser) => {
     if (err) res.send(err);
     else if (!newUser) res.status(400);
-    else {res.send(newUser);}
+    else res.json({newUser});
     next();
   });
 }
@@ -15,7 +15,7 @@ export function getUser(req, res, next) {
   User.findById(req.params.id).then((err, user) => {
     if (err) res.send(err);
     else if (!user) res.status(404);
-    else res.send(user);
+    else res.json({user});
     next();
   });
 }

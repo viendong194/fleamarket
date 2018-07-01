@@ -7,8 +7,10 @@ const url =
 export function loadProducts() {
   return (dispatch) => {
     fetch(`${url}products`)
+      .then(res=>res.json())
       .then((res) => {
-        let products = res.data;
+        let products = res;
+        console.log(products)
         dispatch({ type: 'LOAD_PRODUCTS', products });
       })
       .catch((err) => {
@@ -18,8 +20,9 @@ export function loadProducts() {
 }
 export function getUser(_id) {
   return fetch(`${url}user/${_id}`)
+    .then(res=>res.json())
     .then((res) => {
-      return res.data;
+      return res;
     })
     .catch((err) => console.log(err));
 }
@@ -27,8 +30,9 @@ export function getUser(_id) {
 export function getUserProfile(_id) {
   return (dispatch) => {
     fetch(`${url}user/profile/${_id}`)
+      .then(res=>res.json())
       .then((res) => {
-        let profile = res.data;
+        let profile = res;
         dispatch({ type: 'SET_PROFILE', profile });
       })
       .catch((err) => console.log(err));
@@ -38,8 +42,9 @@ export function getUserProfile(_id) {
 export function getProduct(product_id) {
   return (dispatch) => {
     fetch(`${url}product/${product_id}`)
+      .then(res=>res.json())
       .then((res) => {
-        let product = res.data;
+        let product = res;
         dispatch({ type: 'VIEW_PRODUCT', product });
       })
       .catch((err) => console.log(err));
@@ -95,8 +100,9 @@ export function SignInUser(user_data) {
         'Content-Type': 'application/json'
       }
     })
+      .then(res=>res.json())
       .then((res) => {
-        let user = res.data;
+        let user = res;
         console.log('==================signin=======');
         console.log(user);
         console.log('==================signin=======');
